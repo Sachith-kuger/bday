@@ -317,48 +317,11 @@ function Index() {
   const [scrollY, setScrollY] = useState(0);
   const [claimed, setClaimed] = useState<"idle" | "sending" | "done">("idle");
   const [loadBurst, setLoadBurst] = useState(false);
-  const [started, setStarted] = useState(false);
-  const [introGone, setIntroGone] = useState(false);
   const startRef = useRef<HTMLDivElement>(null);
 
-  const speakBirthday = () => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const synth = window.speechSynthesis;
-    if (!synth) return;
-    synth.cancel();
-    const say = () => {
-      const u = new SpeechSynthesisUtterance("Happy Birthday, Shreyal!");
-      u.rate = 0.92;
-      u.pitch = 1.15;
-      u.volume = 1;
-      const voices = synth.getVoices();
-      const preferred =
-        voices.find((v) => /female|zira|samantha|google uk english female/i.test(v.name)) ??
-        voices.find((v) => v.lang.startsWith("en"));
-      if (preferred) u.voice = preferred;
-      synth.speak(u);
-    };
-    // Voices may load asynchronously on first call.
-    if (synth.getVoices().length === 0) {
-      synth.addEventListener("voiceschanged", say, { once: true });
-      setTimeout(say, 250);
-    } else {
-      say();
-    }
-  };
-
-  const begin = () => {
-    if (started) return;
-    setStarted(true);
-    setLoadBurst(true);
-    speakBirthday();
-    setTimeout(() => setIntroGone(true), 1100);
-  };
-
   useEffect(() => {
-    return () => {
-      window.speechSynthesis?.cancel();
-    };
+    const t = setTimeout(() => setLoadBurst(true), 200);
+    return () => clearTimeout(t);
   }, []);
 
   useEffect(() => {
@@ -392,38 +355,6 @@ function Index() {
 
   return (
     <main className="relative bg-marigold">
-      {!introGone && (
-        <div
-          className="fixed inset-0 z-[80] flex items-center justify-center px-6 text-center transition-opacity duration-1000"
-          style={{
-            background:
-              "radial-gradient(120% 90% at 50% 40%, oklch(0.22 0.06 350), oklch(0.12 0.04 350))",
-            opacity: started ? 0 : 1,
-            pointerEvents: started ? "none" : "auto",
-          }}
-        >
-          <div style={{ animation: "rise-in 0.9s cubic-bezier(.16,.84,.28,1) both" }}>
-            <p className="font-[family-name:var(--font-hand)] text-[clamp(1.4rem,5vw,2.2rem)] font-semibold text-marigold/80">
-              press play, birthday girl
-            </p>
-            <h1 className="mt-3 font-[family-name:var(--font-display)] text-[clamp(2.4rem,9vw,5rem)] font-black uppercase leading-[0.9] text-paper">
-              For Shreyal
-            </h1>
-            <button
-              type="button"
-              onClick={begin}
-              className="mt-10 inline-flex items-center gap-3 rounded-full bg-coral px-10 py-4 text-sm font-black uppercase tracking-[0.18em] text-primary-foreground shadow-lux transition hover:-translate-y-0.5"
-              style={{ animation: "pulse-ring 2.2s ease-out infinite" }}
-            >
-              <span className="text-lg leading-none">♪</span> tap to open
-            </button>
-            <p className="mt-5 text-xs font-semibold uppercase tracking-[0.24em] text-marigold/50">
-              turn your sound on
-            </p>
-          </div>
-        </div>
-      )}
-
       <Confetti fire={loadBurst || claimed === "done"} />
       <Poppers fire={loadBurst} />
       <Balloons fire={loadBurst} />
