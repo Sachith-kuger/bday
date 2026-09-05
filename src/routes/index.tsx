@@ -67,7 +67,7 @@ const chapters = [
     word: "Tsundere",
     hand: "bossy outside, softest inside",
     img: p5.url,
-    body: "You act tough, you boss me around, you roll your eyes like it's a sport — and then you're the first to check if I ate, if I slept, if I got home safe. The attitude is a front. The kindness is the real you. (You'll deny this. I'm screenshotting it anyway.)",
+    body: "You act tough, you boss me around, you roll your eyes like it's a sport — and then you turn around and do the kindest thing without making it a big deal. The attitude is the front. The soft, good-hearted friend underneath is the real you. (You'll deny this. I'm screenshotting it anyway.)",
     tilt: "4deg",
   },
   {
@@ -242,7 +242,7 @@ function Index() {
             className="font-[family-name:var(--font-hand)] text-[clamp(1.6rem,5vw,2.6rem)] font-bold text-coral"
             style={{ animation: "rise-in 0.9s ease-out both" }}
           >
-            okay before you say anything — yes, I made you a whole website.
+            okay, hear me out — five things I need you to know before today ends.
           </p>
 
           <h1 className="mt-2 font-[family-name:var(--font-display)] font-black uppercase leading-[0.82] tracking-[-0.02em]">
@@ -291,8 +291,8 @@ function Index() {
           style={{ transform: `rotate(6deg) translateY(${scrollY * -0.05}px)`, opacity: coverFade }}
         >
           <img
-            src={p1.url}
-            alt="Shreyal, being effortlessly herself"
+            src={p0.url}
+            alt="Shreyal smiling in front of the temple"
             className="aspect-[4/5] w-full object-cover"
           />
         </div>
