@@ -280,3 +280,44 @@
     transform: rotate(calc(var(--r, -3deg) * -1));
   }
 }
+
+@keyframes balloon-up {
+  0% {
+    transform: translateY(115vh) translateX(0) rotate(var(--sway, -6deg));
+    opacity: 0;
+  }
+  8% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-30vh) translateX(var(--drift, 20px)) rotate(calc(var(--sway, -6deg) * -1));
+    opacity: 0;
+  }
+}
+
+@keyframes balloon-sway {
+  0%,
+  100% {
+    transform: rotate(var(--sway, -6deg));
+  }
+  50% {
+    transform: rotate(calc(var(--sway, -6deg) * -1));
+  }
+}
+
+@keyframes popper-shoot {
+  0% {
+    transform: translate(0, 0) scale(0.4) rotate(var(--rot, 0deg));
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--tx, 0), var(--ty, -200px)) scale(1) rotate(calc(var(--rot, 0deg) + var(--spin, 360deg)));
+    opacity: 0;
+  }
+}
