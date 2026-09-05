@@ -320,7 +320,7 @@ function Index() {
   const startRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const t = setTimeout(() => setLoadBurst(true), 500);
+    const t = setTimeout(() => setLoadBurst(true), 200);
     return () => clearTimeout(t);
   }, []);
 
