@@ -148,43 +148,65 @@ function Confetti({ fire }: { fire: boolean }) {
   );
 }
 
+type Balloon = {
+  id: number;
+  left: string;
+  fill: string;
+  dur: string;
+  delay: string;
+  sway: string;
+  drift: string;
+  scale: number;
+  swayDur: string;
+};
+
+const BALLOON_COLORS = ["var(--coral)", "var(--berry)", "var(--marigold-deep)", "var(--plum)"];
+
 function Balloons({ fire }: { fire: boolean }) {
-  const [balloons, setBalloons] = useState<
-    {
-      left: string;
-      fill: string;
-      dur: string;
-      delay: string;
-      sway: string;
-      drift: string;
-      scale: number;
-      swayDur: string;
-    }[]
-  >([]);
+  const [balloons, setBalloons] = useState<Balloon[]>([]);
+  const idRef = useRef(0);
+
   useEffect(() => {
-    if (!fire) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const colors = ["var(--coral)", "var(--berry)", "var(--marigold-deep)", "var(--plum)"];
-    setBalloons(
-      Array.from({ length: 14 }, (_, i) => ({
-        left: `${4 + (i / 14) * 92 + (Math.random() * 6 - 3)}%`,
-        fill: colors[Math.floor(Math.random() * colors.length)]!,
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    const release = (count: number) => {
+      if (reduce) return;
+      const batch: Balloon[] = Array.from({ length: count }, () => ({
+        id: idRef.current++,
+        left: `${2 + Math.random() * 94}%`,
+        fill: BALLOON_COLORS[Math.floor(Math.random() * BALLOON_COLORS.length)]!,
         dur: `${6.5 + Math.random() * 3.5}s`,
-        delay: `${Math.random() * 1.2}s`,
+        delay: `${Math.random() * 0.3}s`,
         sway: `${(Math.random() * 10 + 4) * (Math.random() > 0.5 ? 1 : -1)}deg`,
         drift: `${Math.random() * 80 - 40}px`,
         scale: 0.7 + Math.random() * 0.6,
         swayDur: `${2 + Math.random() * 1.5}s`,
-      })),
-    );
-    const t = setTimeout(() => setBalloons([]), 11000);
-    return () => clearTimeout(t);
+      }));
+      setBalloons((prev) => [...prev, ...batch]);
+      const ids = new Set(batch.map((b) => b.id));
+      setTimeout(() => {
+        setBalloons((prev) => prev.filter((b) => !ids.has(b.id)));
+      }, 11500);
+    };
+
+    if (fire) release(14);
+
+    let last = 0;
+    const onScroll = () => {
+      const now = Date.now();
+      if (now - last < 300) return;
+      last = now;
+      release(2);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, [fire]);
+
   return (
     <div className="pointer-events-none fixed inset-0 z-[55] overflow-hidden">
-      {balloons.map((b, i) => (
+      {balloons.map((b) => (
         <div
-          key={i}
+          key={b.id}
           className="absolute bottom-0"
           style={{
             left: b.left,
