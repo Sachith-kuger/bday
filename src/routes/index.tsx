@@ -175,8 +175,8 @@ function Balloons({ fire }: { fire: boolean }) {
         id: idRef.current++,
         left: `${2 + Math.random() * 94}%`,
         fill: BALLOON_COLORS[Math.floor(Math.random() * BALLOON_COLORS.length)]!,
-        dur: `${6.5 + Math.random() * 3.5}s`,
-        delay: `${Math.random() * 0.3}s`,
+        dur: `${4.5 + Math.random() * 2.5}s`,
+        delay: `${Math.random() * 0.2}s`,
         sway: `${(Math.random() * 10 + 4) * (Math.random() > 0.5 ? 1 : -1)}deg`,
         drift: `${Math.random() * 80 - 40}px`,
         scale: 0.7 + Math.random() * 0.6,
@@ -186,20 +186,10 @@ function Balloons({ fire }: { fire: boolean }) {
       const ids = new Set(batch.map((b) => b.id));
       setTimeout(() => {
         setBalloons((prev) => prev.filter((b) => !ids.has(b.id)));
-      }, 11500);
+      }, 8000);
     };
 
     if (fire) release(14);
-
-    let last = 0;
-    const onScroll = () => {
-      const now = Date.now();
-      if (now - last < 300) return;
-      last = now;
-      release(2);
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
   }, [fire]);
 
   return (
