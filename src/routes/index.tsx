@@ -241,7 +241,7 @@ function Index() {
               className="font-[family-name:var(--font-hand)] text-[clamp(1.5rem,4.5vw,2.4rem)] font-bold text-coral"
               style={{ animation: "rise-in 0.9s ease-out both" }}
             >
-              okay, hear me out — five things I need you to know before today ends.
+              of all the people the world could&apos;ve handed me, it went and picked you.
             </p>
 
             <h1 className="mt-2 font-[family-name:var(--font-display)] font-black uppercase leading-[0.82] tracking-[-0.02em]">
