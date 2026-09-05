@@ -317,11 +317,60 @@ function Index() {
   const [scrollY, setScrollY] = useState(0);
   const [claimed, setClaimed] = useState<"idle" | "sending" | "done">("idle");
   const [loadBurst, setLoadBurst] = useState(false);
+  const [started, setStarted] = useState(false);
+  const [introGone, setIntroGone] = useState(false);
   const startRef = useRef<HTMLDivElement>(null);
+  const audioRef = useRef<AudioContext | null>(null);
+
+  const playBirthdayTune = () => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const Ctx = window.AudioContext ?? (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+    if (!Ctx) return;
+    const ctx = new Ctx();
+    audioRef.current = ctx;
+    const N = {
+      C4: 261.63, D4: 293.66, E4: 329.63, F4: 349.23,
+      G4: 392.0, A4: 440.0, Bb4: 466.16, C5: 523.25,
+    };
+    // Happy Birthday melody: [frequency, beats]
+    const melody: [number, number][] = [
+      [N.C4, 0.75], [N.C4, 0.25], [N.D4, 1], [N.C4, 1], [N.F4, 1], [N.E4, 2],
+      [N.C4, 0.75], [N.C4, 0.25], [N.D4, 1], [N.C4, 1], [N.G4, 1], [N.F4, 2],
+      [N.C4, 0.75], [N.C4, 0.25], [N.C5, 1], [N.A4, 1], [N.F4, 1], [N.E4, 1], [N.D4, 2],
+      [N.Bb4, 0.75], [N.Bb4, 0.25], [N.A4, 1], [N.F4, 1], [N.G4, 1], [N.F4, 2],
+    ];
+    const beat = 0.42;
+    let t = ctx.currentTime + 0.1;
+    for (const [freq, beats] of melody) {
+      const dur = beats * beat;
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = "triangle";
+      osc.frequency.value = freq;
+      const end = t + dur;
+      gain.gain.setValueAtTime(0, t);
+      gain.gain.linearRampToValueAtTime(0.22, t + 0.04);
+      gain.gain.setValueAtTime(0.22, end - 0.08);
+      gain.gain.linearRampToValueAtTime(0, end - 0.02);
+      osc.connect(gain).connect(ctx.destination);
+      osc.start(t);
+      osc.stop(end);
+      t = end;
+    }
+  };
+
+  const begin = () => {
+    if (started) return;
+    setStarted(true);
+    setLoadBurst(true);
+    playBirthdayTune();
+    setTimeout(() => setIntroGone(true), 1100);
+  };
 
   useEffect(() => {
-    const t = setTimeout(() => setLoadBurst(true), 500);
-    return () => clearTimeout(t);
+    return () => {
+      audioRef.current?.close();
+    };
   }, []);
 
   useEffect(() => {
@@ -355,6 +404,38 @@ function Index() {
 
   return (
     <main className="relative bg-marigold">
+      {!introGone && (
+        <div
+          className="fixed inset-0 z-[80] flex items-center justify-center px-6 text-center transition-opacity duration-1000"
+          style={{
+            background:
+              "radial-gradient(120% 90% at 50% 40%, oklch(0.22 0.06 350), oklch(0.12 0.04 350))",
+            opacity: started ? 0 : 1,
+            pointerEvents: started ? "none" : "auto",
+          }}
+        >
+          <div style={{ animation: "rise-in 0.9s cubic-bezier(.16,.84,.28,1) both" }}>
+            <p className="font-[family-name:var(--font-hand)] text-[clamp(1.4rem,5vw,2.2rem)] font-semibold text-marigold/80">
+              press play, birthday girl
+            </p>
+            <h1 className="mt-3 font-[family-name:var(--font-display)] text-[clamp(2.4rem,9vw,5rem)] font-black uppercase leading-[0.9] text-paper">
+              For Shreyal
+            </h1>
+            <button
+              type="button"
+              onClick={begin}
+              className="mt-10 inline-flex items-center gap-3 rounded-full bg-coral px-10 py-4 text-sm font-black uppercase tracking-[0.18em] text-primary-foreground shadow-lux transition hover:-translate-y-0.5"
+              style={{ animation: "pulse-ring 2.2s ease-out infinite" }}
+            >
+              <span className="text-lg leading-none">♪</span> tap to open
+            </button>
+            <p className="mt-5 text-xs font-semibold uppercase tracking-[0.24em] text-marigold/50">
+              turn your sound on
+            </p>
+          </div>
+        </div>
+      )}
+
       <Confetti fire={loadBurst || claimed === "done"} />
       <Poppers fire={loadBurst} />
       <Balloons fire={loadBurst} />
