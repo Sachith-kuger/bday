@@ -15,16 +15,16 @@ const SITE = "https://id-preview--fa9d96ef-3f9f-4bdf-bfbe-6c1432d3f004.lovable.a
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "SHREYAL / TWENTY — A Birthday Exhibition" },
+      { title: "Happy Birthday, Shreyal — from your best friend" },
       {
         name: "description",
         content:
-          "Five words, five rooms, one gift. A cinematic birthday exhibition made for Shreyal on the day she turns twenty.",
+          "A little birthday letter for the most stubborn, softest, smartest person I know. Happy twentieth, Shreyal.",
       },
-      { property: "og:title", content: "SHREYAL / TWENTY — A Birthday Exhibition" },
+      { property: "og:title", content: "Happy Birthday, Shreyal" },
       {
         property: "og:description",
-        content: "Five words, five rooms, one gift. A cinematic birthday exhibition for Shreyal.",
+        content: "A birthday letter for my unexpected best friend, turning twenty.",
       },
       { property: "og:image", content: `${SITE}${p0.url}` },
       { name: "twitter:image", content: `${SITE}${p0.url}` },
@@ -33,56 +33,61 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-const rooms = [
+const chapters = [
   {
-    n: "I",
-    word: "UNPLANNED",
-    tag: "room one · arrivals",
-    line: "Nobody circles the date a best friend shows up.",
-    body: "She wasn't on anyone's list. She simply arrived, stayed, and quietly rewrote the seating chart of an entire life. Now there's no version of the story that works without her in it.",
+    n: "01",
+    kicker: "the plot twist",
+    word: "Unexpected",
+    hand: "and thank god for that",
     img: p2.url,
+    body: "I didn't go looking for a best friend. You just showed up, made yourself at home, and somehow became the person I text first about literally everything. Best plot twist I never asked for.",
+    tilt: "-4deg",
   },
   {
-    n: "II",
-    word: "UNLICENSED",
-    tag: "room two · the practice",
-    line: "A therapist with no certificate and a perfect record.",
-    body: "Unqualified on paper, unbeatable in practice. She lets a spiral run its full length, waits for the exact right silence, and then says the one sentence that puts the furniture back where it belongs.",
+    n: "02",
+    kicker: "the practice",
+    word: "My therapist",
+    hand: "no degree, full refund never",
     img: p3.url,
+    body: "You've talked me down from more spirals than I can count. No appointment, no bill — just you letting me ramble, then saying the one thing that fixes my entire week. Certified? No. Unmatched? Absolutely.",
+    tilt: "3.5deg",
   },
   {
-    n: "III",
-    word: "SOLUTIONIST",
-    tag: "room three · the workshop",
-    line: "Chaos goes in. A numbered plan comes out.",
-    body: "Hand her a problem still shaking and half-formed, and it comes back solved — with steps, in order, in a tone that suggests it was never that complicated. It was. She just makes it look otherwise.",
+    n: "03",
+    kicker: "the workshop",
+    word: "Solutionist",
+    hand: "give her chaos, get back a plan",
     img: p4.url,
+    body: "I bring you a mess that's still on fire and you hand it back solved — in steps, in order, like it was never a big deal. It was a big deal. You just make everything look easy.",
+    tilt: "-3deg",
   },
   {
-    n: "IV",
-    word: "TSUNDERE",
-    tag: "room four · the fine print",
-    line: "Certified difficult. Appeals permanently closed.",
-    body: "Sharp edges, an eye-roll on standby, a 'whatever, fine' that carries more affection than most speeches. Underneath the entire performance sits one of the kindest people alive — a fact she has never once admitted out loud.",
+    n: "04",
+    kicker: "the fine print",
+    word: "Tsundere",
+    hand: "bossy outside, softest inside",
     img: p5.url,
+    body: "You act tough, you boss me around, you roll your eyes like it's a sport — and then you're the first to check if I ate, if I slept, if I got home safe. The attitude is a front. The kindness is the real you. (You'll deny this. I'm screenshotting it anyway.)",
+    tilt: "4deg",
   },
   {
-    n: "V",
-    word: "HOME",
-    tag: "room five · the last door",
-    line: "Some people are a place before they are a person.",
-    body: "A room where nothing has to be performed and nothing has to be earned. That's rarer than it sounds, rarer than she thinks, and the reason this whole exhibition exists.",
+    n: "05",
+    kicker: "the last door",
+    word: "Home",
+    hand: "my favorite place isn't a place",
     img: p6.url,
+    body: "Some people are a place before they're a person. With you I don't have to perform or explain — I just get to exist. That's rarer than you think, and it's the whole reason this little site exists.",
+    tilt: "-3.5deg",
   },
 ];
 
-const gallery = [
-  { src: p1.url, cap: "Plate I — unbothered" },
-  { src: p7.url, cap: "Plate II — effortless" },
-  { src: p3.url, cap: "Plate III — no explanations" },
-  { src: p5.url, cap: "Plate IV — city lights" },
-  { src: p6.url, cap: "Plate V — salt air" },
-  { src: p4.url, cap: "Plate VI — the wall matched" },
+const strip = [
+  { src: p1.url, cap: "unbothered", r: "-5deg" },
+  { src: p7.url, cap: "effortless", r: "3deg" },
+  { src: p3.url, cap: "no explanations", r: "-2deg" },
+  { src: p5.url, cap: "main character", r: "4deg" },
+  { src: p6.url, cap: "warm one", r: "-4deg" },
+  { src: p4.url, cap: "the wall matched", r: "2.5deg" },
 ];
 
 function useReveal() {
@@ -115,9 +120,9 @@ function Confetti({ fire }: { fire: boolean }) {
   useEffect(() => {
     if (!fire) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const colors = ["var(--gold)", "var(--rose)", "var(--glow)", "var(--foreground)"];
+    const colors = ["var(--coral)", "var(--berry)", "var(--paper)", "var(--marigold-deep)"];
     setPieces(
-      Array.from({ length: 54 }, () => ({
+      Array.from({ length: 60 }, () => ({
         left: `${Math.random() * 100}%`,
         bg: colors[Math.floor(Math.random() * colors.length)]!,
         dur: `${2 + Math.random() * 1.8}s`,
@@ -125,15 +130,15 @@ function Confetti({ fire }: { fire: boolean }) {
         round: Math.random() > 0.5 ? "50%" : "0",
       })),
     );
-    const t = setTimeout(() => setPieces([]), 5200);
+    const t = setTimeout(() => setPieces([]), 5400);
     return () => clearTimeout(t);
   }, [fire]);
   return (
-    <>
+    <div className="pointer-events-none fixed inset-x-0 top-0 z-[60] h-0">
       {pieces.map((p, i) => (
         <span
           key={i}
-          className="pointer-events-none absolute top-0 h-[12px] w-[5px] opacity-90"
+          className="absolute top-0 h-[13px] w-[6px] opacity-90"
           style={{
             left: p.left,
             background: p.bg,
@@ -142,28 +147,28 @@ function Confetti({ fire }: { fire: boolean }) {
           }}
         />
       ))}
-    </>
+    </div>
   );
 }
 
 function Marquee({ text, reverse = false }: { text: string; reverse?: boolean }) {
   return (
-    <div className="overflow-hidden border-y border-border bg-obsidian py-4">
+    <div className="overflow-hidden border-y-2 border-plum bg-coral py-3">
       <div
-        className="flex w-max gap-12 whitespace-nowrap"
+        className="flex w-max gap-10 whitespace-nowrap"
         style={{
-          animation: `marquee-x ${reverse ? "30s" : "24s"} linear infinite`,
+          animation: `marquee-x ${reverse ? "32s" : "26s"} linear infinite`,
           animationDirection: reverse ? "reverse" : "normal",
         }}
       >
         {Array.from({ length: 2 }).map((_, k) => (
-          <span key={k} className="flex gap-12">
+          <span key={k} className="flex gap-10">
             {Array.from({ length: 6 }).map((__, i) => (
               <span
                 key={i}
-                className="font-[family-name:var(--font-display)] text-[clamp(1.4rem,3vw,2.4rem)] uppercase tracking-[0.12em] text-muted-foreground"
+                className="font-[family-name:var(--font-display)] text-[clamp(1.3rem,3vw,2.1rem)] font-black uppercase tracking-[0.04em] text-primary-foreground"
               >
-                {text} <span className="text-gold">✦</span>
+                {text} <span className="text-marigold">✿</span>
               </span>
             ))}
           </span>
@@ -178,7 +183,13 @@ function Index() {
   const [progress, setProgress] = useState(0);
   const [scrollY, setScrollY] = useState(0);
   const [claimed, setClaimed] = useState<"idle" | "sending" | "done">("idle");
+  const [loadBurst, setLoadBurst] = useState(false);
   const startRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const t = setTimeout(() => setLoadBurst(true), 500);
+    return () => clearTimeout(t);
+  }, []);
 
   useEffect(() => {
     const onScroll = () => {
@@ -210,177 +221,174 @@ function Index() {
   const coverFade = Math.max(0, 1 - scrollY / (vh * 0.85));
 
   return (
-    <main className="relative bg-obsidian">
-      {/* aurora field */}
-      <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
+    <main className="relative bg-marigold">
+      <Confetti fire={loadBurst || claimed === "done"} />
+
+      {/* scroll progress ribbon */}
+      <div className="fixed inset-x-0 top-0 z-50 h-[4px] bg-plum/15">
         <div
-          className="absolute left-[-15%] top-[-10%] h-[60vh] w-[60vw] rounded-full opacity-25 blur-[120px]"
-          style={{
-            background: "radial-gradient(circle, var(--glow), transparent 65%)",
-            animation: "aurora-drift 22s ease-in-out infinite",
-          }}
-        />
-        <div
-          className="absolute bottom-[-20%] right-[-10%] h-[55vh] w-[55vw] rounded-full opacity-25 blur-[130px]"
-          style={{
-            background: "radial-gradient(circle, var(--gold), transparent 65%)",
-            animation: "aurora-drift 28s ease-in-out infinite reverse",
-          }}
+          className="h-full bg-plum transition-[width] duration-75"
+          style={{ width: `${progress}%` }}
         />
       </div>
 
-      <div className="fixed inset-x-0 top-0 z-50 h-[3px] bg-foreground/10">
+      {/* ---------- COVER ---------- */}
+      <section className="grain relative flex min-h-[100svh] w-full flex-col items-center justify-center overflow-hidden px-5 py-16 text-center">
         <div
-          className="h-full transition-[width] duration-75"
-          style={{
-            width: `${progress}%`,
-            background: "linear-gradient(90deg,var(--gold),var(--rose),var(--glow))",
-          }}
-        />
-      </div>
-
-      {/* COVER */}
-      <section className="grain relative z-10 h-[100svh] w-full overflow-hidden">
-        <img
-          src={p0.url}
-          alt="Shreyal on her twentieth birthday"
-          className="absolute inset-0 h-full w-full object-cover object-center"
-          style={{
-            animation: "slow-zoom 18s ease-out forwards",
-            transform: `translateY(${scrollY * 0.25}px)`,
-          }}
-        />
-        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,oklch(0.11_0.016_275/0.72),oklch(0.11_0.016_275/0.25)_38%,oklch(0.11_0.016_275/0.95))]" />
-
-        <div
-          className="absolute inset-0 flex flex-col justify-between px-5 py-7 sm:px-10"
-          style={{ opacity: coverFade }}
+          className="mx-auto max-w-4xl"
+          style={{ opacity: coverFade, transform: `translateY(${scrollY * 0.12}px)` }}
         >
-          <div className="flex items-start justify-between text-[0.6rem] uppercase tracking-[0.35em] text-foreground/70">
-            <span>Exhibition No. 20</span>
-            <span className="hidden sm:inline">Admission: free</span>
-            <span>Sept 6</span>
-          </div>
+          <p
+            className="font-[family-name:var(--font-hand)] text-[clamp(1.6rem,5vw,2.6rem)] font-bold text-coral"
+            style={{ animation: "rise-in 0.9s ease-out both" }}
+          >
+            okay before you say anything — yes, I made you a whole website.
+          </p>
 
-          <div className="pb-8 text-center">
-            <p
-              className="text-[0.6rem] uppercase tracking-[0.5em] text-gold"
-              style={{ animation: "rise-in 1s ease-out both" }}
+          <h1 className="mt-2 font-[family-name:var(--font-display)] font-black uppercase leading-[0.82] tracking-[-0.02em]">
+            <span
+              className="block text-[clamp(2.6rem,11vw,7rem)]"
+              style={{ animation: "rise-in 1s cubic-bezier(.16,.84,.28,1) 0.1s both" }}
             >
-              now showing
-            </p>
-            <h1
-              className="foil mt-3 font-[family-name:var(--font-display)] text-[clamp(3.4rem,17vw,11rem)] uppercase leading-[0.82] tracking-[-0.02em]"
-              style={{ animation: "rise-in 1.1s cubic-bezier(.16,.84,.28,1) 0.1s both" }}
+              Happy
+            </span>
+            <span
+              className="outline-type block text-[clamp(2.6rem,11vw,7rem)]"
+              style={{ animation: "rise-in 1s cubic-bezier(.16,.84,.28,1) 0.2s both" }}
             >
+              Birthday
+            </span>
+          </h1>
+
+          <div
+            className="relative mt-6 inline-block"
+            style={{ animation: "rise-in 1s cubic-bezier(.16,.84,.28,1) 0.34s both" }}
+          >
+            <span className="relative z-10 inline-block -rotate-2 bg-plum px-6 py-2 font-[family-name:var(--font-display)] text-[clamp(2rem,8vw,4.4rem)] font-black uppercase text-marigold shadow-lux">
               Shreyal
-            </h1>
-            <p
-              className="stroke-type font-[family-name:var(--font-display)] text-[clamp(2.6rem,14vw,9rem)] uppercase leading-[0.85] tracking-[0.02em]"
-              style={{ animation: "rise-in 1.1s cubic-bezier(.16,.84,.28,1) 0.25s both" }}
-            >
-              Twenty
+            </span>
+          </div>
+
+          <p className="mx-auto mt-7 max-w-md text-[clamp(1.05rem,3.6vw,1.35rem)] leading-relaxed text-plum/80">
+            The most stubborn, softest, smartest person I know is officially{" "}
+            <span className="font-semibold text-coral">twenty</span>. Scroll — I have things to say
+            and you can't interrupt this time.
+          </p>
+
+          <button
+            type="button"
+            onClick={() => startRef.current?.scrollIntoView({ behavior: "smooth" })}
+            className="mt-8 rounded-full bg-coral px-8 py-3.5 text-sm font-bold uppercase tracking-[0.16em] text-primary-foreground shadow-lux transition hover:-translate-y-0.5"
+            style={{ animation: "float-soft 3.4s ease-in-out infinite" }}
+          >
+            read the letter ↓
+          </button>
+        </div>
+
+        {/* floating polaroid peek */}
+        <div
+          className="polaroid absolute bottom-[-3rem] right-[6vw] hidden w-40 rotate-6 md:block"
+          style={{ transform: `rotate(6deg) translateY(${scrollY * -0.05}px)`, opacity: coverFade }}
+        >
+          <img
+            src={p1.url}
+            alt="Shreyal, being effortlessly herself"
+            className="aspect-[4/5] w-full object-cover"
+          />
+        </div>
+      </section>
+
+      <Marquee text="Happy Birthday Shreyal" />
+
+      {/* ---------- OPENING NOTE ---------- */}
+      <section ref={startRef} className="relative px-5 py-20 sm:py-28">
+        <div className="mx-auto max-w-3xl">
+          <div className="tape reveal relative mx-auto max-w-2xl rounded-lg bg-paper p-8 text-card-foreground shadow-lux sm:p-12">
+            <p className="font-[family-name:var(--font-hand)] text-[clamp(1.4rem,4vw,2rem)] font-semibold text-coral">
+              Dear Shreyal,
             </p>
-            <p className="mx-auto mt-5 max-w-md font-[family-name:var(--font-serif-ui)] text-[clamp(1.05rem,3.6vw,1.5rem)] italic text-foreground/75">
-              Five words. Five rooms. One thing waiting at the end.
+            <p className="mt-4 text-[clamp(1.1rem,3.2vw,1.4rem)] leading-relaxed">
+              I tried to put you into a birthday card and ran out of room, so here we are. Five
+              things I know to be true about you — hung up in order, on purpose. Take them slowly.
+              No eye-rolling.
             </p>
-            <button
-              type="button"
-              onClick={() => startRef.current?.scrollIntoView({ behavior: "smooth" })}
-              className="mt-8 rounded-full border border-gold/60 px-7 py-3 text-[0.6rem] uppercase tracking-[0.34em] text-gold backdrop-blur-sm transition hover:bg-gold hover:text-primary-foreground"
-              style={{ animation: "float-soft 3.4s ease-in-out infinite" }}
-            >
-              enter the exhibition ↓
-            </button>
+            <p className="mt-6 font-[family-name:var(--font-hand)] text-[clamp(1.3rem,3.5vw,1.7rem)] text-plum/70">
+              (yes, I know you're already rolling your eyes.)
+            </p>
           </div>
         </div>
       </section>
 
-      <Marquee text="Happy 20th Shreyal" />
+      {/* ---------- FIVE CHAPTERS ---------- */}
+      {chapters.map((c, i) => (
+        <section key={c.word} className="relative px-5 py-10 sm:py-16">
+          <div className="mx-auto grid max-w-5xl items-center gap-10 md:grid-cols-2 md:gap-16">
+            {/* photo */}
+            <div className={`reveal flex justify-center ${i % 2 ? "md:order-2" : ""}`}>
+              <figure
+                className="polaroid w-[min(78vw,20rem)] transition-transform duration-500 hover:rotate-0"
+                style={{ transform: `rotate(${c.tilt})` }}
+              >
+                <img
+                  src={c.img}
+                  alt={`Shreyal — ${c.word.toLowerCase()}`}
+                  loading="lazy"
+                  className="aspect-[4/5] w-full object-cover"
+                />
+                <figcaption className="mt-3 text-center font-[family-name:var(--font-hand)] text-2xl font-semibold text-plum/80">
+                  {c.hand}
+                </figcaption>
+              </figure>
+            </div>
 
-      {/* WALL TEXT */}
-      <section ref={startRef} className="relative z-10 px-5 py-24 sm:px-10">
-        <Confetti fire={claimed === "done"} />
-        <div className="mx-auto max-w-4xl text-center">
-          <span className="reveal block text-[0.6rem] uppercase tracking-[0.4em] text-gold">
-            wall text · read before entering
-          </span>
-          <p className="reveal mt-7 font-[family-name:var(--font-serif-ui)] text-[clamp(1.7rem,5.6vw,3.4rem)] italic leading-[1.15]">
-            Nineteen has closed for good. What follows is an attempt to put a whole person into five
-            words — and the honest admission that five isn't nearly enough.
-          </p>
-          <div className="reveal mx-auto mt-10 h-px w-24 bg-gold/60" />
-          <p className="reveal mx-auto mt-8 max-w-xl leading-relaxed text-muted-foreground">
-            Curated by someone who has watched all five of these words hold true on the same
-            afternoon. Take the rooms slowly; they were hung in this order on purpose.
-          </p>
-        </div>
-      </section>
-
-      {/* FIVE ROOMS */}
-      {rooms.map((r, i) => (
-        <section key={r.word} className="relative z-10 border-t border-border">
-          <div className="mx-auto grid max-w-6xl items-center gap-8 px-5 py-16 sm:px-10 md:grid-cols-2 md:gap-14 md:py-24">
-            <figure
-              className={`reveal relative overflow-hidden ${i % 2 ? "md:order-2" : ""}`}
-              style={{ aspectRatio: "4/5" }}
-            >
-              <img
-                src={r.img}
-                alt={`Shreyal — ${r.word.toLowerCase()}`}
-                loading="lazy"
-                className="h-full w-full object-cover transition duration-[1200ms] hover:scale-[1.05]"
-              />
-              <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_top,oklch(0.11_0.016_275/0.75),transparent_55%)]" />
-              <figcaption className="absolute bottom-4 left-4 text-[0.58rem] uppercase tracking-[0.28em] text-foreground/70">
-                {r.tag}
-              </figcaption>
-            </figure>
-
+            {/* text */}
             <div className={i % 2 ? "md:order-1" : ""}>
-              <div className="reveal flex items-baseline gap-4">
-                <span className="font-[family-name:var(--font-display)] text-[clamp(2rem,6vw,3.4rem)] text-gold/50">
-                  {r.n}
+              <div className="reveal flex items-center gap-3">
+                <span className="font-[family-name:var(--font-display)] text-[clamp(2.4rem,7vw,4rem)] font-black text-coral">
+                  {c.n}
                 </span>
-                <span className="h-px flex-1 bg-border" />
+                <span className="text-xs font-semibold uppercase tracking-[0.3em] text-muted-foreground">
+                  {c.kicker}
+                </span>
               </div>
-              <h2 className="reveal mt-3 font-[family-name:var(--font-display)] text-[clamp(2.6rem,11vw,5.6rem)] uppercase leading-[0.86] tracking-[-0.01em]">
-                {r.word}
+              <h2 className="reveal mt-2 font-[family-name:var(--font-display)] text-[clamp(2.6rem,10vw,5rem)] font-black uppercase leading-[0.88] tracking-[-0.01em]">
+                {c.word}
               </h2>
-              <p className="reveal mt-4 font-[family-name:var(--font-serif-ui)] text-[clamp(1.2rem,4vw,1.9rem)] italic text-gold">
-                {r.line}
+              <p className="reveal mt-5 max-w-lg text-[clamp(1.05rem,3vw,1.3rem)] leading-relaxed text-plum/85">
+                {c.body}
               </p>
-              <p className="reveal mt-5 max-w-lg leading-relaxed text-muted-foreground">{r.body}</p>
             </div>
           </div>
         </section>
       ))}
 
-      <Marquee text="Twenty looks good on her" reverse />
+      <div className="py-8" />
+      <Marquee text="Twenty looks good on you" reverse />
 
-      {/* GALLERY RAIL */}
-      <section className="relative z-10 py-20">
-        <div className="mx-auto mb-8 flex max-w-6xl flex-wrap items-end justify-between gap-3 px-5 sm:px-10">
-          <h2 className="reveal font-[family-name:var(--font-display)] text-[clamp(2rem,7vw,3.6rem)] uppercase leading-none">
-            The <span className="foil">evidence</span>
+      {/* ---------- PHOTO STRIP ---------- */}
+      <section className="relative py-20">
+        <div className="mx-auto mb-10 max-w-5xl px-5">
+          <h2 className="reveal font-[family-name:var(--font-display)] text-[clamp(2.2rem,8vw,4rem)] font-black uppercase leading-none">
+            The <span className="text-coral">evidence</span>
           </h2>
-          <span className="reveal text-[0.58rem] uppercase tracking-[0.3em] text-muted-foreground">
-            swipe → plates i–vi
-          </span>
+          <p className="reveal mt-2 font-[family-name:var(--font-hand)] text-2xl text-plum/70">
+            exhibit A through F — swipe →
+          </p>
         </div>
-        <div className="rail flex snap-x snap-mandatory gap-5 overflow-x-auto px-5 pb-4 sm:px-10">
-          {gallery.map((g) => (
-            <figure key={g.cap} className="group w-[70vw] shrink-0 snap-center sm:w-[300px]">
-              <div className="overflow-hidden bg-card">
-                <img
-                  src={g.src}
-                  alt={g.cap}
-                  loading="lazy"
-                  className="h-full w-full object-cover grayscale transition duration-[900ms] group-hover:scale-[1.05] group-hover:grayscale-0"
-                  style={{ aspectRatio: "3/4" }}
-                />
-              </div>
-              <figcaption className="mt-2 text-[0.56rem] uppercase tracking-[0.24em] text-muted-foreground">
+        <div className="rail flex snap-x snap-mandatory gap-8 overflow-x-auto px-6 pb-6 sm:px-10">
+          {strip.map((g) => (
+            <figure
+              key={g.cap}
+              className="polaroid w-[62vw] shrink-0 snap-center transition-transform duration-500 hover:rotate-0 sm:w-[16rem]"
+              style={{ transform: `rotate(${g.r})` }}
+            >
+              <img
+                src={g.src}
+                alt={g.cap}
+                loading="lazy"
+                className="aspect-[4/5] w-full object-cover"
+              />
+              <figcaption className="mt-3 text-center font-[family-name:var(--font-hand)] text-2xl font-semibold text-plum/80">
                 {g.cap}
               </figcaption>
             </figure>
@@ -388,70 +396,73 @@ function Index() {
         </div>
       </section>
 
-      {/* GIFT */}
-      <section className="relative z-10 px-5 pb-24 pt-10 sm:px-10">
-        <div className="mx-auto max-w-3xl">
-          <div className="reveal mb-10 text-center">
-            <span className="text-[0.6rem] uppercase tracking-[0.4em] text-gold">
-              the last room
-            </span>
-            <h2 className="mt-3 font-[family-name:var(--font-display)] text-[clamp(2.2rem,8vw,4.4rem)] uppercase leading-none">
-              One more thing
+      {/* ---------- GIFT ---------- */}
+      <section className="relative px-5 pb-24 pt-6">
+        <div className="mx-auto max-w-2xl">
+          <div className="reveal mb-8 text-center">
+            <p className="font-[family-name:var(--font-hand)] text-[clamp(1.6rem,5vw,2.4rem)] font-bold text-coral">
+              one more thing before you go
+            </p>
+            <h2 className="mt-1 font-[family-name:var(--font-display)] text-[clamp(2rem,8vw,3.6rem)] font-black uppercase leading-none">
+              Go eat something ridiculous
             </h2>
           </div>
 
-          <div className="reveal relative mx-auto max-w-xl overflow-hidden border border-gold/35 bg-card shadow-lux">
-            <div
-              className="pointer-events-none absolute inset-0 opacity-25"
-              style={{ background: "radial-gradient(120% 70% at 50% 0%, var(--gold), transparent 60%)" }}
-            />
-            <span className="absolute -left-3 top-1/2 h-6 w-6 -translate-y-1/2 rounded-full bg-obsidian" />
-            <span className="absolute -right-3 top-1/2 h-6 w-6 -translate-y-1/2 rounded-full bg-obsidian" />
-            <div className="relative flex items-center justify-between border-b border-dashed border-gold/30 px-6 py-3 text-[0.58rem] uppercase tracking-[0.28em] text-muted-foreground">
+          <div className="reveal relative mx-auto max-w-xl overflow-hidden rounded-2xl border-2 border-plum bg-paper text-card-foreground shadow-lux">
+            <div className="flex items-center justify-between border-b-2 border-dashed border-plum/40 px-6 py-3 text-xs font-bold uppercase tracking-[0.24em] text-muted-foreground">
               <span>birthday voucher</span>
-              <span className="text-gold">№ 020</span>
+              <span className="text-coral">№ 020</span>
             </div>
-            <div className="relative px-6 py-10 text-center sm:px-10">
-              <p className="foil font-[family-name:var(--font-display)] text-[clamp(4rem,20vw,8rem)] leading-[0.85]">
+            <span className="absolute -left-3 top-[3.1rem] h-6 w-6 rounded-full bg-marigold" />
+            <span className="absolute -right-3 top-[3.1rem] h-6 w-6 rounded-full bg-marigold" />
+
+            <div className="px-6 py-10 text-center sm:px-10">
+              <p className="font-[family-name:var(--font-display)] text-[clamp(4rem,20vw,8rem)] font-black leading-[0.85] text-coral">
                 ₹500
               </p>
-              <p className="mx-auto mt-4 max-w-sm leading-relaxed text-muted-foreground">
-                Lunch, dinner, dessert, or all three in one sitting. No questions, no receipts.
-                Twenty-year-olds deserve good food.
+              <p className="mx-auto mt-4 max-w-sm text-[clamp(1rem,3vw,1.2rem)] leading-relaxed text-plum/80">
+                Lunch, dinner, dessert, or all three in one sitting. My treat — no arguments (I
+                already know you'll argue anyway).
               </p>
+
               <button
                 type="button"
                 onClick={unlock}
                 disabled={claimed !== "idle"}
-                className="mt-8 inline-flex items-center gap-2 rounded-full bg-gold px-9 py-4 text-[0.68rem] font-bold uppercase tracking-[0.26em] text-primary-foreground transition hover:-translate-y-0.5 disabled:opacity-80"
+                className="mt-8 inline-flex items-center gap-2 rounded-full bg-coral px-10 py-4 text-sm font-black uppercase tracking-[0.18em] text-primary-foreground transition hover:-translate-y-0.5 disabled:opacity-80"
                 style={claimed === "idle" ? { animation: "pulse-ring 2.2s ease-out infinite" } : undefined}
               >
                 {claimed === "idle"
-                  ? "Unlock the gift"
+                  ? "Unlock your gift"
                   : claimed === "sending"
                     ? "Sending…"
-                    : "Unlocked 🎉"}
+                    : "Unlocked!"}
               </button>
-              <p className="mt-4 text-[0.56rem] uppercase tracking-[0.22em] text-muted-foreground">
+
+              <p className="mt-4 font-[family-name:var(--font-hand)] text-xl text-plum/70">
                 {claimed === "done"
-                  ? "he's been notified — check your upi app soon"
-                  : "tap to claim — he'll take it from here"}
+                  ? "sent it your way — go check your UPI, birthday girl"
+                  : "tap it and I'll handle the rest"}
               </p>
             </div>
-            <div className="relative border-t border-dashed border-gold/30 px-6 py-3 text-center text-[0.54rem] uppercase tracking-[0.3em] text-muted-foreground">
-              non-transferable · expires never
+
+            <div className="border-t-2 border-dashed border-plum/40 px-6 py-3 text-center text-[0.65rem] font-bold uppercase tracking-[0.24em] text-muted-foreground">
+              non-transferable · expires never · no receipts
             </div>
           </div>
         </div>
       </section>
 
-      <footer className="relative z-10 border-t border-border px-5 py-20 text-center sm:px-10">
-        <p className="font-[family-name:var(--font-serif-ui)] text-[clamp(1.8rem,6vw,3.4rem)] italic leading-tight">
-          Welcome to twenty. <span className="foil not-italic">It suits her.</span>
+      {/* ---------- FOOTER ---------- */}
+      <footer className="grain relative border-t-2 border-plum bg-coral px-5 py-24 text-center text-primary-foreground">
+        <p className="font-[family-name:var(--font-display)] text-[clamp(2.2rem,9vw,4.6rem)] font-black uppercase leading-[0.9]">
+          Happy twenty,
+          <br />
+          Shreyal
         </p>
-        <span className="mt-5 block text-[0.56rem] uppercase tracking-[0.3em] text-muted-foreground">
-          Exhibition No. 20 · assembled with an unreasonable amount of thought
-        </span>
+        <p className="mx-auto mt-6 max-w-md font-[family-name:var(--font-hand)] text-[clamp(1.6rem,5vw,2.4rem)] font-semibold">
+          love you (ew, I said it) — now go have the best year yet.
+        </p>
       </footer>
     </main>
   );

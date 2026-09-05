@@ -30,41 +30,48 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --color-obsidian: var(--obsidian);
-  --color-gold: var(--gold);
-  --color-glow: var(--glow);
-  --color-rose: var(--rose);
-  --font-display: "Anton", sans-serif;
-  --font-serif-ui: "Cormorant Garamond", serif;
-  --font-sans: "Space Grotesk", sans-serif;
+  --color-marigold: var(--marigold);
+  --color-marigold-deep: var(--marigold-deep);
+  --color-plum: var(--plum);
+  --color-paper: var(--paper);
+  --color-coral: var(--coral);
+  --color-berry: var(--berry);
+  --font-display: "Fraunces", serif;
+  --font-hand: "Caveat", cursive;
+  --font-sans: "Fraunces", serif;
 }
 
 :root {
-  --radius: 0.25rem;
-  --background: oklch(0.14 0.018 275);
-  --foreground: oklch(0.96 0.01 90);
-  --card: oklch(0.18 0.022 275);
-  --card-foreground: oklch(0.96 0.01 90);
-  --popover: oklch(0.18 0.022 275);
-  --popover-foreground: oklch(0.96 0.01 90);
-  --primary: oklch(0.82 0.14 85);
-  --primary-foreground: oklch(0.16 0.02 275);
-  --secondary: oklch(0.24 0.03 280);
-  --secondary-foreground: oklch(0.96 0.01 90);
-  --muted: oklch(0.24 0.02 280);
-  --muted-foreground: oklch(0.72 0.02 285);
-  --accent: oklch(0.72 0.16 20);
-  --accent-foreground: oklch(0.16 0.02 275);
+  --radius: 0.75rem;
+
+  --marigold: oklch(0.84 0.14 78);
+  --marigold-deep: oklch(0.72 0.155 62);
+  --plum: oklch(0.27 0.08 350);
+  --paper: oklch(0.975 0.015 88);
+  --coral: oklch(0.64 0.2 22);
+  --berry: oklch(0.5 0.17 356);
+
+  --background: var(--marigold);
+  --foreground: var(--plum);
+  --card: var(--paper);
+  --card-foreground: var(--plum);
+  --popover: var(--paper);
+  --popover-foreground: var(--plum);
+  --primary: var(--coral);
+  --primary-foreground: oklch(0.98 0.015 88);
+  --secondary: oklch(0.9 0.06 82);
+  --secondary-foreground: var(--plum);
+  --muted: oklch(0.88 0.06 82);
+  --muted-foreground: oklch(0.44 0.07 355);
+  --accent: var(--coral);
+  --accent-foreground: oklch(0.98 0.015 88);
   --destructive: oklch(0.58 0.2 25);
-  --destructive-foreground: oklch(0.97 0.01 90);
-  --border: oklch(0.96 0.01 90 / 14%);
-  --input: oklch(0.96 0.01 90 / 20%);
-  --ring: oklch(0.82 0.14 85 / 45%);
-  --obsidian: oklch(0.11 0.016 275);
-  --gold: oklch(0.84 0.14 86);
-  --glow: oklch(0.72 0.15 300);
-  --rose: oklch(0.72 0.16 20);
-  --shadow-lux: 0 40px 90px -40px oklch(0.05 0.02 275 / 90%);
+  --destructive-foreground: oklch(0.98 0.015 88);
+  --border: oklch(0.27 0.08 350 / 22%);
+  --input: oklch(0.27 0.08 350 / 30%);
+  --ring: oklch(0.64 0.2 22 / 45%);
+  --shadow-lux: 0 30px 60px -30px oklch(0.3 0.09 350 / 55%);
+  --shadow-polaroid: 0 18px 40px -18px oklch(0.3 0.09 350 / 55%);
 }
 
 @layer base {
@@ -73,17 +80,18 @@
   }
   html {
     scroll-behavior: smooth;
+    background-color: var(--color-marigold);
   }
   body {
-    background-color: var(--color-obsidian);
+    background-color: var(--color-marigold);
     color: var(--color-foreground);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
   }
   ::selection {
-    background: var(--color-gold);
-    color: var(--color-obsidian);
+    background: var(--color-coral);
+    color: var(--color-paper);
   }
   @media (prefers-reduced-motion: reduce) {
     * {
@@ -105,39 +113,45 @@
     position: absolute;
     inset: 0;
     pointer-events: none;
-    opacity: 0.3;
-    background-image: radial-gradient(oklch(0.96 0.01 90 / 9%) 1px, transparent 1px);
-    background-size: 3px 3px;
+    opacity: 0.22;
+    background-image: radial-gradient(oklch(0.3 0.09 350 / 14%) 1px, transparent 1px);
+    background-size: 4px 4px;
   }
 }
 
-@utility foil {
-  background-image: linear-gradient(
-    100deg,
-    var(--color-gold) 0%,
-    oklch(0.98 0.04 95) 28%,
-    var(--color-rose) 52%,
-    oklch(0.98 0.04 95) 74%,
-    var(--color-gold) 100%
-  );
-  background-size: 260% 100%;
-  -webkit-background-clip: text;
-  background-clip: text;
+@utility outline-type {
   color: transparent;
-  animation: foil-sweep 7s linear infinite;
+  -webkit-text-stroke: 2px var(--color-plum);
 }
 
-@utility stroke-type {
-  color: transparent;
-  -webkit-text-stroke: 1.5px oklch(0.96 0.01 90 / 45%);
+@utility polaroid {
+  background: var(--color-paper);
+  padding: 0.75rem 0.75rem 3rem;
+  box-shadow: var(--shadow-polaroid);
+  border: 1px solid oklch(0.3 0.09 350 / 8%);
+}
+
+@utility tape {
+  position: relative;
+  &::before {
+    content: "";
+    position: absolute;
+    top: -0.7rem;
+    left: 50%;
+    width: 5.5rem;
+    height: 1.5rem;
+    transform: translateX(-50%) rotate(-3deg);
+    background: oklch(0.88 0.08 84 / 72%);
+    box-shadow: 0 1px 4px oklch(0.3 0.09 350 / 20%);
+  }
 }
 
 @utility reveal {
   opacity: 0;
   transform: translateY(34px);
   transition:
-    opacity 1s cubic-bezier(0.16, 0.84, 0.28, 1),
-    transform 1s cubic-bezier(0.16, 0.84, 0.28, 1);
+    opacity 0.9s cubic-bezier(0.16, 0.84, 0.28, 1),
+    transform 0.9s cubic-bezier(0.16, 0.84, 0.28, 1);
   &.in-view {
     opacity: 1;
     transform: none;
@@ -151,17 +165,12 @@
   }
 }
 
-@keyframes foil-sweep {
-  to {
-    background-position: 260% 0;
-  }
-}
 @keyframes slow-zoom {
   from {
-    transform: scale(1.18);
+    transform: scale(1.12);
   }
   to {
-    transform: scale(1.02);
+    transform: scale(1.01);
   }
 }
 @keyframes marquee-x {
@@ -190,7 +199,7 @@
 @keyframes rise-in {
   from {
     opacity: 0;
-    transform: translateY(110%) rotate(4deg);
+    transform: translateY(90%) rotate(3deg);
   }
   to {
     opacity: 1;
@@ -199,18 +208,18 @@
 }
 @keyframes pulse-ring {
   0% {
-    box-shadow: 0 0 0 0 oklch(0.84 0.14 86 / 45%);
+    box-shadow: 0 0 0 0 oklch(0.64 0.2 22 / 45%);
   }
   100% {
-    box-shadow: 0 0 0 26px oklch(0.84 0.14 86 / 0%);
+    box-shadow: 0 0 0 24px oklch(0.64 0.2 22 / 0%);
   }
 }
-@keyframes aurora-drift {
+@keyframes wobble {
   0%,
   100% {
-    transform: translate3d(-6%, -4%, 0) scale(1);
+    transform: rotate(var(--r, -3deg));
   }
   50% {
-    transform: translate3d(8%, 6%, 0) scale(1.18);
+    transform: rotate(calc(var(--r, -3deg) * -1));
   }
 }
