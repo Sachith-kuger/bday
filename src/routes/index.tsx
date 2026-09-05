@@ -296,6 +296,104 @@ function Poppers({ fire }: { fire: boolean }) {
   );
 }
 
+function CakeIntro({ onOpen }: { onOpen: () => void }) {
+  const [blown, setBlown] = useState(false);
+  const [ready, setReady] = useState(false);
+  const [leaving, setLeaving] = useState(false);
+  const candles = [0, 1, 2, 3, 4];
+
+  useEffect(() => {
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const t1 = setTimeout(() => setBlown(true), reduce ? 0 : 1600);
+    const t2 = setTimeout(() => setReady(true), reduce ? 150 : 2500);
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+      document.body.style.overflow = prev;
+    };
+  }, []);
+
+  const open = () => {
+    if (leaving) return;
+    setLeaving(true);
+    setTimeout(onOpen, 650);
+  };
+
+  return (
+    <div
+      className={`cake-intro grain glow-vignette fixed inset-0 z-[70] flex flex-col items-center justify-center overflow-hidden bg-marigold px-5 text-center ${
+        leaving ? "cake-intro--leaving" : ""
+      }`}
+    >
+      <p
+        className="font-[family-name:var(--font-hand)] text-[clamp(1.4rem,4.5vw,2.1rem)] font-bold text-coral"
+        style={{ animation: "rise-in 0.8s ease-out both" }}
+      >
+        {blown ? "the smoke says it counts —" : "one little candle for every year (okay, five)"}
+      </p>
+      <h1 className="mb-10 mt-1 font-[family-name:var(--font-display)] text-[clamp(2.4rem,9vw,4.5rem)] font-black uppercase leading-[0.85] tracking-[-0.02em]">
+        {blown ? (
+          <>
+            Wish
+            <br />
+            made.
+          </>
+        ) : (
+          <>
+            Make a wish,
+            <br />
+            <span className="text-coral">Shreyal</span>
+          </>
+        )}
+      </h1>
+
+      <div className="cake-scene" style={{ animation: "cake-in 0.9s cubic-bezier(.16,.84,.28,1) both" }}>
+        <div className="cake-candles">
+          {candles.map((i) => (
+            <span className="candle" key={i}>
+              {!blown && (
+                <span className="flame">
+                  <span className="flame-body" />
+                </span>
+              )}
+              {blown && (
+                <>
+                  <span className="flame flame--out">
+                    <span className="flame-body" />
+                  </span>
+                  <span className="smoke" style={{ animationDelay: `${i * 0.06}s` }} />
+                </>
+              )}
+            </span>
+          ))}
+        </div>
+        <div className="cake-body">
+          <div className="cake-frosting" />
+          <div className="cake-sponge" />
+        </div>
+        <div className="cake-plate" />
+      </div>
+
+      <button
+        type="button"
+        onClick={open}
+        aria-hidden={!ready}
+        tabIndex={ready ? 0 : -1}
+        className="cake-link underline-doodle mt-12 font-[family-name:var(--font-display)] text-[clamp(1.2rem,4vw,1.7rem)] font-black uppercase tracking-[0.02em] text-plum"
+        style={{
+          opacity: ready ? 1 : 0,
+          transform: ready ? "none" : "translateY(14px)",
+          pointerEvents: ready ? "auto" : "none",
+        }}
+      >
+        open your birthday letter →
+      </button>
+    </div>
+  );
+}
+
 function Marquee({ text, reverse = false }: { text: string; reverse?: boolean }) {
   return (
     <div className="overflow-hidden border-y-2 border-plum bg-coral py-3">
