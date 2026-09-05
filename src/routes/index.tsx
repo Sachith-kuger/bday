@@ -38,9 +38,9 @@ const chapters = [
     n: "01",
     kicker: "the plot twist",
     word: "Unexpected",
-    hand: "and thank god for that",
+    hand: "best friend, zero warning",
     img: p2.url,
-    body: "I didn't go looking for a best friend. You just showed up, made yourself at home, and somehow became the person I text first about literally everything. Best plot twist I never asked for.",
+    body: "I wasn't looking for a new best friend — and then you crashed in like it was nothing. Somehow you became the first person I text with dumb memes, big news, and everything in between. Best friend I never saw coming, and easily the best surprise I've got.",
     tilt: "-4deg",
   },
   {
@@ -73,10 +73,10 @@ const chapters = [
   {
     n: "05",
     kicker: "the last door",
-    word: "Home",
-    hand: "my favorite place isn't a place",
+    word: "Home girl",
+    hand: "certified stay-in bestie",
     img: p6.url,
-    body: "Some people are a place before they're a person. With you I don't have to perform or explain — I just get to exist. That's rarer than you think, and it's the whole reason this little site exists.",
+    body: "You're the definition of a home girl — happiest in comfy clothes, snacks within reach, no plans and no pressure. Hanging out with you feels exactly like that: easy, comfortable, no need to perform. Best-friend energy, zero effort required. That's the whole reason this little site exists.",
     tilt: "-3.5deg",
   },
 ];
@@ -100,10 +100,7 @@ function useReveal() {
     const obs = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
-          if (e.isIntersecting) {
-            e.target.classList.add("in-view");
-            obs.unobserve(e.target);
-          }
+          e.target.classList.toggle("in-view", e.isIntersecting);
         });
       },
       { threshold: 0.15, rootMargin: "0px 0px -60px 0px" },
@@ -233,88 +230,97 @@ function Index() {
       </div>
 
       {/* ---------- COVER ---------- */}
-      <section className="grain glow-vignette relative flex min-h-[100svh] w-full flex-col items-center justify-center overflow-hidden px-5 py-16 text-center">
-        {/* wax seal badge */}
-        <div
-          className="seal absolute right-[7vw] top-[12vh] z-20 hidden h-28 w-28 -rotate-12 flex-col md:flex"
-          style={{ opacity: coverFade, animation: "seal-pop 0.9s cubic-bezier(.16,.84,.28,1) 0.7s both" }}
-        >
-          <span className="font-[family-name:var(--font-display)] text-3xl font-black leading-none">
-            20
-          </span>
-          <span className="mt-0.5 text-[0.55rem] font-bold uppercase tracking-[0.22em]">
-            est. today
-          </span>
-        </div>
-
-        <div
-          className="relative z-10 mx-auto max-w-4xl"
-          style={{ opacity: coverFade, transform: `translateY(${scrollY * 0.12}px)` }}
-        >
-          <p
-            className="font-[family-name:var(--font-hand)] text-[clamp(1.6rem,5vw,2.6rem)] font-bold text-coral"
-            style={{ animation: "rise-in 0.9s ease-out both" }}
-          >
-            okay, hear me out — five things I need you to know before today ends.
-          </p>
-
-          <h1 className="mt-2 font-[family-name:var(--font-display)] font-black uppercase leading-[0.82] tracking-[-0.02em]">
-            <span
-              className="block text-[clamp(2.6rem,11vw,7rem)]"
-              style={{ animation: "rise-in 1s cubic-bezier(.16,.84,.28,1) 0.1s both" }}
-            >
-              Happy
-            </span>
-            <span
-              className="outline-type block text-[clamp(2.6rem,11vw,7rem)]"
-              style={{ animation: "rise-in 1s cubic-bezier(.16,.84,.28,1) 0.2s both" }}
-            >
-              Birthday
-            </span>
-          </h1>
-
+      <section className="grain glow-vignette relative flex min-h-[100svh] w-full items-center overflow-hidden px-5 py-16">
+        <div className="mx-auto grid w-full max-w-6xl items-center gap-10 md:grid-cols-[1.15fr_0.85fr] md:gap-8">
+          {/* left: words */}
           <div
-            className="relative mt-6 inline-block"
-            style={{ animation: "rise-in 1s cubic-bezier(.16,.84,.28,1) 0.34s both" }}
+            className="relative z-10 text-center md:text-left"
+            style={{ opacity: coverFade, transform: `translateY(${scrollY * 0.1}px)` }}
           >
-            <span className="relative z-10 inline-block -rotate-2 bg-plum px-6 py-2 font-[family-name:var(--font-display)] text-[clamp(2rem,8vw,4.4rem)] font-black uppercase text-marigold shadow-lux">
-              Shreyal
-            </span>
+            <p
+              className="font-[family-name:var(--font-hand)] text-[clamp(1.5rem,4.5vw,2.4rem)] font-bold text-coral"
+              style={{ animation: "rise-in 0.9s ease-out both" }}
+            >
+              okay, hear me out — five things I need you to know before today ends.
+            </p>
+
+            <h1 className="mt-2 font-[family-name:var(--font-display)] font-black uppercase leading-[0.82] tracking-[-0.02em]">
+              <span
+                className="block text-[clamp(2.8rem,10vw,6rem)]"
+                style={{ animation: "rise-in 1s cubic-bezier(.16,.84,.28,1) 0.1s both" }}
+              >
+                Happy
+              </span>
+              <span
+                className="outline-type block text-[clamp(2.8rem,10vw,6rem)]"
+                style={{ animation: "rise-in 1s cubic-bezier(.16,.84,.28,1) 0.2s both" }}
+              >
+                Birthday
+              </span>
+            </h1>
+
+            <div
+              className="relative mt-5 inline-block"
+              style={{ animation: "rise-in 1s cubic-bezier(.16,.84,.28,1) 0.34s both" }}
+            >
+              <span className="relative z-10 inline-block -rotate-2 bg-plum px-6 py-2 font-[family-name:var(--font-display)] text-[clamp(2rem,7vw,4rem)] font-black uppercase text-marigold shadow-lux">
+                Shreyal
+              </span>
+            </div>
+
+            <p className="mx-auto mt-7 max-w-md text-[clamp(1.05rem,3.6vw,1.3rem)] leading-relaxed text-plum/80 md:mx-0">
+              The most stubborn, softest, smartest person I know is officially{" "}
+              <span className="underline-doodle font-semibold text-plum">twenty</span>. Scroll — I
+              have things to say and you can&apos;t interrupt this time.
+            </p>
+
+            <button
+              type="button"
+              onClick={() => startRef.current?.scrollIntoView({ behavior: "smooth" })}
+              className="mt-8 rounded-full bg-coral px-8 py-3.5 text-sm font-bold uppercase tracking-[0.16em] text-primary-foreground shadow-lux transition hover:-translate-y-0.5"
+              style={{ animation: "float-soft 3.4s ease-in-out infinite" }}
+            >
+              read the letter ↓
+            </button>
           </div>
 
-          <p className="mx-auto mt-7 max-w-md text-[clamp(1.05rem,3.6vw,1.35rem)] leading-relaxed text-plum/80">
-            The most stubborn, softest, smartest person I know is officially{" "}
-            <span className="underline-doodle font-semibold text-plum">twenty</span>. Scroll — I
-            have things to say and you can&apos;t interrupt this time.
-          </p>
-
-          <button
-            type="button"
-            onClick={() => startRef.current?.scrollIntoView({ behavior: "smooth" })}
-            className="mt-8 rounded-full bg-coral px-8 py-3.5 text-sm font-bold uppercase tracking-[0.16em] text-primary-foreground shadow-lux transition hover:-translate-y-0.5"
-            style={{ animation: "float-soft 3.4s ease-in-out infinite" }}
+          {/* right: temple photo stack */}
+          <div
+            className="relative mx-auto flex w-full max-w-[22rem] items-center justify-center"
+            style={{ opacity: coverFade, transform: `translateY(${scrollY * -0.05}px)` }}
           >
-            read the letter ↓
-          </button>
-        </div>
+            {/* wax seal badge */}
+            <div
+              className="seal absolute -right-2 -top-6 z-20 flex h-24 w-24 -rotate-12 flex-col md:-right-4 md:-top-8 md:h-28 md:w-28"
+              style={{ animation: "seal-pop 0.9s cubic-bezier(.16,.84,.28,1) 0.7s both" }}
+            >
+              <span className="font-[family-name:var(--font-display)] text-3xl font-black leading-none">
+                20
+              </span>
+              <span className="mt-0.5 text-[0.55rem] font-bold uppercase tracking-[0.22em]">
+                est. today
+              </span>
+            </div>
 
-        {/* floating polaroid cluster */}
-        <div
-          className="pointer-events-none absolute bottom-[-2.5rem] right-[5vw] hidden md:block"
-          style={{ opacity: coverFade, transform: `translateY(${scrollY * -0.05}px)` }}
-        >
-          <div className="polaroid absolute bottom-6 right-24 w-32 -rotate-12">
-            <img src={p6.url} alt="" className="aspect-[4/5] w-full object-cover" />
-          </div>
-          <div className="polaroid relative w-44 rotate-6">
-            <img
-              src={p0.url}
-              alt="Shreyal in front of the temple"
-              className="aspect-[4/5] w-full object-cover"
-            />
-            <figcaption className="mt-2 text-center font-[family-name:var(--font-hand)] text-xl font-semibold text-plum/80">
-              the birthday girl
-            </figcaption>
+            <div
+              className="polaroid absolute -left-6 bottom-2 z-0 hidden w-28 -rotate-12 sm:block"
+              style={{ animation: "float-soft 5s ease-in-out infinite" }}
+            >
+              <img src={p6.url} alt="" className="aspect-[4/5] w-full object-cover" />
+            </div>
+            <div
+              className="polaroid relative z-10 w-[min(70vw,17rem)] rotate-3"
+              style={{ animation: "float-soft 4.4s ease-in-out infinite 0.4s" }}
+            >
+              <img
+                src={p0.url}
+                alt="Shreyal in front of the temple"
+                className="aspect-[4/5] w-full object-cover"
+              />
+              <figcaption className="mt-2 text-center font-[family-name:var(--font-hand)] text-2xl font-semibold text-plum/80">
+                the birthday girl
+              </figcaption>
+            </div>
           </div>
         </div>
       </section>
