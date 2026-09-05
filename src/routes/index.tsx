@@ -148,6 +148,142 @@ function Confetti({ fire }: { fire: boolean }) {
   );
 }
 
+function Balloons({ fire }: { fire: boolean }) {
+  const [balloons, setBalloons] = useState<
+    {
+      left: string;
+      fill: string;
+      dur: string;
+      delay: string;
+      sway: string;
+      drift: string;
+      scale: number;
+      swayDur: string;
+    }[]
+  >([]);
+  useEffect(() => {
+    if (!fire) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const colors = ["var(--coral)", "var(--berry)", "var(--marigold-deep)", "var(--plum)"];
+    setBalloons(
+      Array.from({ length: 14 }, (_, i) => ({
+        left: `${4 + (i / 14) * 92 + (Math.random() * 6 - 3)}%`,
+        fill: colors[Math.floor(Math.random() * colors.length)]!,
+        dur: `${6.5 + Math.random() * 3.5}s`,
+        delay: `${Math.random() * 1.2}s`,
+        sway: `${(Math.random() * 10 + 4) * (Math.random() > 0.5 ? 1 : -1)}deg`,
+        drift: `${Math.random() * 80 - 40}px`,
+        scale: 0.7 + Math.random() * 0.6,
+        swayDur: `${2 + Math.random() * 1.5}s`,
+      })),
+    );
+    const t = setTimeout(() => setBalloons([]), 11000);
+    return () => clearTimeout(t);
+  }, [fire]);
+  return (
+    <div className="pointer-events-none fixed inset-0 z-[55] overflow-hidden">
+      {balloons.map((b, i) => (
+        <div
+          key={i}
+          className="absolute bottom-0"
+          style={{
+            left: b.left,
+            ["--sway" as string]: b.sway,
+            ["--drift" as string]: b.drift,
+            animation: `balloon-up ${b.dur} cubic-bezier(.4,0,.5,1) ${b.delay} forwards`,
+          }}
+        >
+          <div
+            style={{
+              transformOrigin: "bottom center",
+              ["--sway" as string]: b.sway,
+              animation: `balloon-sway ${b.swayDur} ease-in-out infinite`,
+              transform: `scale(${b.scale})`,
+            }}
+          >
+            <svg width="46" height="66" viewBox="0 0 46 66" fill="none" aria-hidden="true">
+              <ellipse cx="23" cy="24" rx="21" ry="24" fill={b.fill} />
+              <ellipse cx="16" cy="16" rx="6" ry="8" fill="oklch(1 0 0 / 35%)" />
+              <path d="M23 48 l-3 4 h6 z" fill={b.fill} />
+              <path
+                d="M23 52 q4 8 -2 14"
+                stroke="var(--plum)"
+                strokeWidth="1"
+                fill="none"
+                opacity="0.5"
+              />
+            </svg>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function Poppers({ fire }: { fire: boolean }) {
+  const [bits, setBits] = useState<
+    {
+      side: "left" | "right";
+      bg: string;
+      dur: string;
+      delay: string;
+      tx: string;
+      ty: string;
+      rot: string;
+      spin: string;
+      size: number;
+      round: string;
+    }[]
+  >([]);
+  useEffect(() => {
+    if (!fire) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const colors = ["var(--coral)", "var(--berry)", "var(--paper)", "var(--marigold-deep)"];
+    const make = (side: "left" | "right") =>
+      Array.from({ length: 30 }, () => {
+        const spread = Math.random();
+        const horiz = (side === "left" ? 1 : -1) * (120 + spread * 460);
+        return {
+          side,
+          bg: colors[Math.floor(Math.random() * colors.length)]!,
+          dur: `${1.1 + Math.random() * 1.1}s`,
+          delay: `${Math.random() * 0.25}s`,
+          tx: `${horiz}px`,
+          ty: `${-80 - Math.random() * 360}px`,
+          rot: `${Math.random() * 360}deg`,
+          spin: `${(Math.random() > 0.5 ? 1 : -1) * (360 + Math.random() * 540)}deg`,
+          size: 7 + Math.random() * 9,
+          round: Math.random() > 0.6 ? "50%" : "1px",
+        };
+      });
+    setBits([...make("left"), ...make("right")]);
+    const t = setTimeout(() => setBits([]), 2800);
+    return () => clearTimeout(t);
+  }, [fire]);
+  return (
+    <div className="pointer-events-none fixed inset-0 z-[58] overflow-hidden">
+      {bits.map((p, i) => (
+        <span
+          key={i}
+          className="absolute bottom-6"
+          style={{
+            [p.side]: "2%",
+            width: p.size,
+            height: p.round === "50%" ? p.size : p.size * 1.6,
+            background: p.bg,
+            borderRadius: p.round,
+            ["--tx" as string]: p.tx,
+            ["--ty" as string]: p.ty,
+            ["--rot" as string]: p.rot,
+            ["--spin" as string]: p.spin,
+            animation: `popper-shoot ${p.dur} cubic-bezier(.15,.6,.4,1) ${p.delay} forwards`,
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
 function Marquee({ text, reverse = false }: { text: string; reverse?: boolean }) {
   return (
     <div className="overflow-hidden border-y-2 border-plum bg-coral py-3">
@@ -220,6 +356,8 @@ function Index() {
   return (
     <main className="relative bg-marigold">
       <Confetti fire={loadBurst || claimed === "done"} />
+      <Poppers fire={loadBurst} />
+      <Balloons fire={loadBurst} />
 
       {/* scroll progress ribbon */}
       <div className="fixed inset-x-0 top-0 z-50 h-[4px] bg-plum/15">
