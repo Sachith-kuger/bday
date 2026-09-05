@@ -320,42 +320,30 @@ function Index() {
   const [started, setStarted] = useState(false);
   const [introGone, setIntroGone] = useState(false);
   const startRef = useRef<HTMLDivElement>(null);
-  const audioRef = useRef<AudioContext | null>(null);
 
-  const playBirthdayTune = () => {
+  const speakBirthday = () => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const Ctx = window.AudioContext ?? (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
-    if (!Ctx) return;
-    const ctx = new Ctx();
-    audioRef.current = ctx;
-    const N = {
-      C4: 261.63, D4: 293.66, E4: 329.63, F4: 349.23,
-      G4: 392.0, A4: 440.0, Bb4: 466.16, C5: 523.25,
+    const synth = window.speechSynthesis;
+    if (!synth) return;
+    synth.cancel();
+    const say = () => {
+      const u = new SpeechSynthesisUtterance("Happy Birthday, Shreyal!");
+      u.rate = 0.92;
+      u.pitch = 1.15;
+      u.volume = 1;
+      const voices = synth.getVoices();
+      const preferred =
+        voices.find((v) => /female|zira|samantha|google uk english female/i.test(v.name)) ??
+        voices.find((v) => v.lang.startsWith("en"));
+      if (preferred) u.voice = preferred;
+      synth.speak(u);
     };
-    // Happy Birthday melody: [frequency, beats]
-    const melody: [number, number][] = [
-      [N.C4, 0.75], [N.C4, 0.25], [N.D4, 1], [N.C4, 1], [N.F4, 1], [N.E4, 2],
-      [N.C4, 0.75], [N.C4, 0.25], [N.D4, 1], [N.C4, 1], [N.G4, 1], [N.F4, 2],
-      [N.C4, 0.75], [N.C4, 0.25], [N.C5, 1], [N.A4, 1], [N.F4, 1], [N.E4, 1], [N.D4, 2],
-      [N.Bb4, 0.75], [N.Bb4, 0.25], [N.A4, 1], [N.F4, 1], [N.G4, 1], [N.F4, 2],
-    ];
-    const beat = 0.42;
-    let t = ctx.currentTime + 0.1;
-    for (const [freq, beats] of melody) {
-      const dur = beats * beat;
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      osc.type = "triangle";
-      osc.frequency.value = freq;
-      const end = t + dur;
-      gain.gain.setValueAtTime(0, t);
-      gain.gain.linearRampToValueAtTime(0.22, t + 0.04);
-      gain.gain.setValueAtTime(0.22, end - 0.08);
-      gain.gain.linearRampToValueAtTime(0, end - 0.02);
-      osc.connect(gain).connect(ctx.destination);
-      osc.start(t);
-      osc.stop(end);
-      t = end;
+    // Voices may load asynchronously on first call.
+    if (synth.getVoices().length === 0) {
+      synth.addEventListener("voiceschanged", say, { once: true });
+      setTimeout(say, 250);
+    } else {
+      say();
     }
   };
 
@@ -363,13 +351,13 @@ function Index() {
     if (started) return;
     setStarted(true);
     setLoadBurst(true);
-    playBirthdayTune();
+    speakBirthday();
     setTimeout(() => setIntroGone(true), 1100);
   };
 
   useEffect(() => {
     return () => {
-      audioRef.current?.close();
+      window.speechSynthesis?.cancel();
     };
   }, []);
 
