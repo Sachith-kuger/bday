@@ -1,14 +1,14 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 
-import p0 from "@/assets/p0.jpg.asset.json";
-import p1 from "@/assets/p1.jpg.asset.json";
-import p2 from "@/assets/p2.jpg.asset.json";
-import p3 from "@/assets/p3.jpg.asset.json";
-import p4 from "@/assets/p4.jpg.asset.json";
-import p5 from "@/assets/p5.jpg.asset.json";
-import p6 from "@/assets/p6.jpg.asset.json";
-import p7 from "@/assets/p7.jpg.asset.json";
+const p0 = { url: "/photos/p0.jpg" };
+const p1 = { url: "/photos/p1.jpg" };
+const p2 = { url: "/photos/p2.jpg" };
+const p3 = { url: "/photos/p3.jpg" };
+const p4 = { url: "/photos/p4.jpg" };
+const p5 = { url: "/photos/p5.jpg" };
+const p6 = { url: "/photos/p6.jpg" };
+const p7 = { url: "/photos/p7.jpg" };
 
 const SITE = "https://id-preview--fa9d96ef-3f9f-4bdf-bfbe-6c1432d3f004.lovable.app";
 
