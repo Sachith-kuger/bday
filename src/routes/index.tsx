@@ -233,9 +233,22 @@ function Index() {
       </div>
 
       {/* ---------- COVER ---------- */}
-      <section className="grain relative flex min-h-[100svh] w-full flex-col items-center justify-center overflow-hidden px-5 py-16 text-center">
+      <section className="grain glow-vignette relative flex min-h-[100svh] w-full flex-col items-center justify-center overflow-hidden px-5 py-16 text-center">
+        {/* wax seal badge */}
         <div
-          className="mx-auto max-w-4xl"
+          className="seal absolute right-[7vw] top-[12vh] z-20 hidden h-28 w-28 -rotate-12 flex-col md:flex"
+          style={{ opacity: coverFade, animation: "seal-pop 0.9s cubic-bezier(.16,.84,.28,1) 0.7s both" }}
+        >
+          <span className="font-[family-name:var(--font-display)] text-3xl font-black leading-none">
+            20
+          </span>
+          <span className="mt-0.5 text-[0.55rem] font-bold uppercase tracking-[0.22em]">
+            est. today
+          </span>
+        </div>
+
+        <div
+          className="relative z-10 mx-auto max-w-4xl"
           style={{ opacity: coverFade, transform: `translateY(${scrollY * 0.12}px)` }}
         >
           <p
@@ -271,8 +284,8 @@ function Index() {
 
           <p className="mx-auto mt-7 max-w-md text-[clamp(1.05rem,3.6vw,1.35rem)] leading-relaxed text-plum/80">
             The most stubborn, softest, smartest person I know is officially{" "}
-            <span className="font-semibold text-coral">twenty</span>. Scroll — I have things to say
-            and you can't interrupt this time.
+            <span className="underline-doodle font-semibold text-plum">twenty</span>. Scroll — I
+            have things to say and you can&apos;t interrupt this time.
           </p>
 
           <button
@@ -285,16 +298,24 @@ function Index() {
           </button>
         </div>
 
-        {/* floating polaroid peek */}
+        {/* floating polaroid cluster */}
         <div
-          className="polaroid absolute bottom-[-3rem] right-[6vw] hidden w-40 rotate-6 md:block"
-          style={{ transform: `rotate(6deg) translateY(${scrollY * -0.05}px)`, opacity: coverFade }}
+          className="pointer-events-none absolute bottom-[-2.5rem] right-[5vw] hidden md:block"
+          style={{ opacity: coverFade, transform: `translateY(${scrollY * -0.05}px)` }}
         >
-          <img
-            src={p0.url}
-            alt="Shreyal smiling in front of the temple"
-            className="aspect-[4/5] w-full object-cover"
-          />
+          <div className="polaroid absolute bottom-6 right-24 w-32 -rotate-12">
+            <img src={p6.url} alt="" className="aspect-[4/5] w-full object-cover" />
+          </div>
+          <div className="polaroid relative w-44 rotate-6">
+            <img
+              src={p0.url}
+              alt="Shreyal in front of the temple"
+              className="aspect-[4/5] w-full object-cover"
+            />
+            <figcaption className="mt-2 text-center font-[family-name:var(--font-hand)] text-xl font-semibold text-plum/80">
+              the birthday girl
+            </figcaption>
+          </div>
         </div>
       </section>
 
@@ -461,7 +482,7 @@ function Index() {
           Shreyal
         </p>
         <p className="mx-auto mt-6 max-w-md font-[family-name:var(--font-hand)] text-[clamp(1.6rem,5vw,2.4rem)] font-semibold">
-          love you (ew, I said it) — now go have the best year yet.
+          the world's louder and better with you in it — now go have the best year yet.
         </p>
       </footer>
     </main>
